@@ -41,12 +41,12 @@ Five hands-on tasks completed as part of the **Cognifyz Technologies Full Stack 
 
 ## Outputs
 
-![Cognifyz task outputs](screenshots/collage.png)
+![Cognifyz task outputs] <img width="1600" height="1418" alt="image" src="https://github.com/user-attachments/assets/10861685-14df-4491-9034-ec09a04b4500" />
+
 
 ## Demo video
 
-[Watch the 40-second walkthrough](https://github.com/sarsika/cognifyz-full-stack-internship/blob/main/demo/Cognifyz_Internship_Showcase.mp4)
-
+[Watch the 40-second walkthrough] (https://github.com/sarsika/cognifyz-full-stack-internship/blob/main/demo/Cognifyz_Internship_Showcase.mp4)
 ## Tech stack
 
 HTML5 · CSS3 · JavaScript · Node.js
