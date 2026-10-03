@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration</title>
+</head>
+<body style="font-family: Arial; background-color: #f2f2f2;">
+  <div style="width: 400px; margin: 40px auto; padding: 20px; background-color: white; border-radius: 8px;">
+    <h2 style="text-align: center; color: #333;">Registration Form</h2>
+
+    <% if (errors.length > 0) { %>
+      <ul style="color: red;">
+        <% errors.forEach(function(e) { %>
+          <li><%= e %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <p id="clientError" style="color: red;"></p>
+
+    <form action="/register" method="POST" onsubmit="return checkForm()">
+      <label>Name:</label><br>
+      <input type="text" name="name" id="name" value="<%= old.name || '' %>" style="width: 100%; padding: 6px;"><br><br>
+
+      <label>Email:</label><br>
+      <input type="text" name="email" id="email" value="<%= old.email || '' %>" style="width: 100%; padding: 6px;"><br><br>
+
+      <label>Age:</label><br>
+      <input type="number" name="age" id="age" value="<%= old.age || '' %>" style="width: 100%; padding: 6px;"><br><br>
+
+      <label>Gender:</label><br>
+      <input type="radio" name="gender" value="Male"> Male
+      <input type="radio" name="gender" value="Female"> Female
+      <input type="radio" name="gender" value="Other"> Other<br><br>
+
+      <label>Country:</label><br>
+      <select name="country" id="country" style="width: 100%; padding: 6px;">
+        <option value="">-- Select --</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+      </select><br><br>
+
+      <input type="checkbox" name="terms" id="terms"> I accept the terms<br><br>
+
+      <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px;">Register</button>
+    </form>
+
+    <p style="text-align: center;"><a href="/users">View Users</a></p>
+  </div>
+
+  <script>
+    function checkForm() {
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var age = document.getElementById('age').value;
+      var country = document.getElementById('country').value;
+      var terms = document.getElementById('terms').checked;
+      var msg = document.getElementById('clientError');
+
+      if (name.trim().length < 3) {
+        msg.innerText = 'Name must be at least 3 characters';
+        return false;
+      }
+      if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+        msg.innerText = 'Enter a valid email';
+        return false;
+      }
+      if (age < 18 || age > 60) {
+        msg.innerText = 'Age must be between 18 and 60';
+        return false;
+      }
+      if (country === '') {
+        msg.innerText = 'Select a country';
+        return false;
+      }
+      if (!terms) {
+        msg.innerText = 'Accept the terms';
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

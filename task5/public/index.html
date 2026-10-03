@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Manager</title>
+  <style>
+    body { font-family: Arial; background-color: #f2f2f2; }
+    .box { max-width: 500px; margin: 30px auto; padding: 20px; background: white; border-radius: 8px; }
+    input { padding: 6px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+    button { padding: 6px 12px; margin-top: 5px; cursor: pointer; }
+    li { margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Book Manager</h2>
+
+    <input type="hidden" id="bookId">
+    <input type="text" id="title" placeholder="Title">
+    <input type="text" id="author" placeholder="Author">
+    <button onclick="saveBook()">Save</button>
+    <button onclick="clearForm()">Clear</button>
+
+    <ul id="bookList"></ul>
+  </div>
+
+  <script>
+    const url = '/api/books';
+
+    async function loadBooks() {
+      const res = await fetch(url);
+      const books = await res.json();
+      const list = document.getElementById('bookList');
+      list.innerHTML = '';
+
+      books.forEach(function (b) {
+        const li = document.createElement('li');
+        li.innerHTML = b.title + ' - ' + b.author +
+          ' <button onclick="editBook(' + b.id + ')">Edit</button>' +
+          ' <button onclick="deleteBook(' + b.id + ')">Delete</button>';
+        list.appendChild(li);
+      });
+    }
+
+    async function saveBook() {
+      const id = document.getElementById('bookId').value;
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value;
+
+      if (title === '' || author === '') {
+        alert('Fill all fields');
+        return;
+      }
+
+      const data = { title: title, author: author };
+
+      if (id === '') {
+        await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } else {
+        await fetch(url + '/' + id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      }
+
+      clearForm();
+      loadBooks();
+    }
+
+    async function editBook(id) {
+      const res = await fetch(url + '/' + id);
+      const book = await res.json();
+      document.getElementById('bookId').value = book.id;
+      document.getElementById('title').value = book.title;
+      document.getElementById('author').value = book.author;
+    }
+
+    async function deleteBook(id) {
+      await fetch(url + '/' + id, { method: 'DELETE' });
+      loadBooks();
+    }
+
+    function clearForm() {
+      document.getElementById('bookId').value = '';
+      document.getElementById('title').value = '';
+      document.getElementById('author').value = '';
+    }
+
+    loadBooks();
+  </script>
+</body>
+</html>

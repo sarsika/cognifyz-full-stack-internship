@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Users</title>
+</head>
+<body style="font-family: Arial; background-color: #f2f2f2;">
+  <div style="width: 700px; margin: 40px auto; padding: 20px; background-color: white; border-radius: 8px;">
+    <h2 style="text-align: center;">Registered Users</h2>
+
+    <% if (users.length === 0) { %>
+      <p style="text-align: center;">No users yet.</p>
+    <% } else { %>
+      <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+        <tr style="background-color: #007bff; color: white;">
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Country</th>
+        </tr>
+        <% users.forEach(function(u) { %>
+          <tr>
+            <td><%= u.name %></td>
+            <td><%= u.email %></td>
+            <td><%= u.age %></td>
+            <td><%= u.gender %></td>
+            <td><%= u.country %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+
+    <p style="text-align: center;"><a href="/">Back to form</a></p>
+  </div>
+</body>
+</html>
